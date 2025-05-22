@@ -1,0 +1,31 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-header-bg {
+  background-color: #003366;
+}
+
+.custom-input {
+  height: 34px;
+  font-size: 14px;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+}
+
+footer {
+  margin-top: auto;
+  background-color: #003366;
+}
+
+@media (max-width: 768px) {
+  .login-wrapper {
+      padding: 0 1rem;
+  }
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
