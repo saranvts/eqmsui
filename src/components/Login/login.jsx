@@ -1,47 +1,151 @@
-import React from 'react';
+import { useState } from "react";
 import './login.css';
-import loginimage from '../../assets/images/login.png';
+import loginimage from '../../assets/images/eqms-bg1.png';
 import drdologo from '../../assets/images/drdologo.png';
+import { MdPerson, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import bgImage from '../../assets/images/gradient-blue.jpg';
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import withRouter from "../../common/with-router";
+import { login } from "../../services/auth.service";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const initialValues = { username: "", password: "" };
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required("Username is required")
+      .min(3, "Username must be at least 3 characters")
+      .max(20, "Username must not exceed 20 characters"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(3, "Password must be at least 3 characters")
+      .max(40, "Password must not exceed 40 characters"),
+  });
+
+  const handleLoginSubmit = async (values) => {
+    setMessage("");
+    setLoading(true);
+    const { username, password } = values;
+    await login(username, password).then(
+      (response) => {
+        if (!response.data) {
+          setLoading(false);
+          showError("Login failed. Please try again.");
+        } else {
+          props.router.navigate("/dashboard");
+        }
+      },
+      (error) => {
+        let resMessage;
+        if (error.response && error.response.status === 401) {
+          resMessage = "Username or password is incorrect";
+        } else {
+          resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+        setLoading(false);
+        showError(resMessage);
+      }
+    );
+  };
+
+  const showError = (msg) => {
+    setMessage(msg);
+    setTimeout(() => setMessage(''), 3000);
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <div className="login-wrapper d-flex flex-column" style={{ minHeight: '100vh' }}>
+    <div className="login-wrapper d-flex flex-column">
       {/* Header */}
       <header className="navbar navbar-expand-lg navbar-dark custom-header-bg px-2 py-2">
         <div className="d-flex align-items-center mx-auto">
           <img src={drdologo} alt="Logo" height="70" width="70" className="me-4" />
-          <h4 className="text-white mb-0">Equipment Management System</h4>
+          <h2 className="text-white mb-0">Equipment Management System (EQMS)</h2>
         </div>
       </header>
 
       {/* Main Content with equal padding */}
-      <main className="flex-grow-1 d-flex justify-content-center align-items-center p-4">
-        <div className="card  rounded overflow-hidden w-100" style={{ maxWidth: '1000px', border: 'none', boxShadow: 'none' }}>
-          <div className="row g-0" >
+      <main className="flex-grow-1 d-flex justify-content-center align-items-center p-4"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+      >
+        <div className="card card-custom overflow-hidden w-100">
+          <div className="row g-0" style={{height:'500px'}}>
             {/* Left Side: Image */}
             <div className="col-md-6 d-flex align-items-center justify-content-center  p-4">
               <img
                 src={loginimage}
                 alt="loginimage"
                 className="img-fluid"
-                style={{ maxWidth: '400px', maxHeight: '100%' }}
+                style={{ maxWidth: '530px', maxHeight: '100%' }}
               />
             </div>
             {/* Right Side: Login Form */}
-            <div className="col-md-6 bg-light p-5 d-flex flex-column justify-content-center">
-              <h5 className="text-center mb-2" style={{ color: '#003366' }}>Welcome To EQMS</h5>
+            <div className="col-md-6 p-5 d-flex flex-column justify-content-center">
+              <h5 className="text-center text-brand mb-2">Welcome To EQMS</h5>
               <h4 className="text-center mb-4">Login</h4>
-              <form className="d-flex flex-column align-items-center">
-                <div className="mb-3 w-75">
-                  <input type="text" className="form-control custom-input" placeholder="Username" />
-                </div>
-                <div className="mb-3 w-75">
-                  <input type="password" className="form-control custom-input" placeholder="Password" />
-                </div>
-                <div className="w-75">
-                  <button type="submit" className="btn btn-success w-100">Login</button>
-                </div>
-              </form>
+               {message && (
+                  <div className="form-group">
+                      <div className="alert alert-danger" role="alert">
+                          {message}
+                      </div>
+                  </div>
+                  )}
+               <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLoginSubmit}>
+                {({ errors, touched, handleChange, values }) => (
+                  <Form className="d-flex flex-column align-items-center">
+                    <div className="mb-3 w-75 position-relative">
+                      <input
+                        name="username"
+                        type="text"
+                        className="form-control custom-input pe-5"
+                        placeholder="Username"
+                        value={values.username}
+                        onChange={handleChange}
+                      />
+                      <MdPerson className="input-icon-end" />
+                      {errors.username && touched.username && <div className="text-danger small">{errors.username}</div>}
+                    </div>
+
+                    <div className="mb-3 w-75 position-relative">
+                      <input
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        className="form-control custom-input pe-5"
+                        placeholder="Password"
+                        value={values.password}
+                        onChange={handleChange}
+                      />
+                      <span
+                        className="input-icon-end password-toggle"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      </span>
+                      {errors.password && touched.password && <div className="text-danger small">{errors.password}</div>}
+                    </div>
+
+                    <div className="w-75 py-2">
+                      <button type="submit" className="btn bg-primary text-white custom-btn">Login</button>
+                    </div>
+                  </Form>
+                )}
+
+              </Formik>
+
             </div>
           </div>
         </div>
@@ -58,4 +162,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default withRouter(LoginPage);
