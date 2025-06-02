@@ -1,52 +1,45 @@
-/* Remove default active color */
-.navbar .dropdown-item:active {
-    background-color: #e0e0e0 !important;  
-    color: #333 !important;  
-  }
-  
-  /* Optionally, change the focus styles */
-  .navbar .dropdown-item:focus {
-    background-color: #e0e0e0 !important;
-    color: #333 !important;
-  }
-  
-  /* Prevent any outline or focus ring from showing */
-  .navbar .dropdown-item:focus-visible {
-    outline: none !important;
-  }
-  
-  .nav-link,.dropdown-toggle,.navbar-brand
-  {
-    color:white !important;
-    font-weight: 500 !important;
-  }
+.navbar .dropdown-item:hover {
+  background-color: #163bb7 !important;
+  color: white !important;
+}
 
-  .home{
-    color:white !important;
-    font-weight: 500 !important;
-    height: 45px!important;
-  }
+.nav-link,
+.dropdown-toggle,
+.navbar-brand {
+  color: white !important;
+  font-weight: 500 !important;
+}
 
-/* Show dropdown on hover */
+.home {
+  color: white !important;
+  font-weight: 500 !important;
+  height: 45px !important;
+}
+
 .hover-dropdown:hover .dropdown-menu {
   display: block;
   opacity: 1;
   visibility: visible;
 }
 
-/* Initially hide dropdown */
 .hover-dropdown .dropdown-menu {
-  display: block; /* required for opacity transition */
+  display: block;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   margin-top: 0;
-  position: absolute; /* Ensures dropdown is correctly positioned */
+  position: absolute;
 }
-.navbar-first{
- background-color: #163bb7;
+
+.navbar-first {
+  background-color: #163bb7;
 }
-.navbar-second{
+
+.navbar-second {
   background-color: #336699;
 }
 
+.navbar-brand:hover .icon,
+.navbar-brand:hover .label {
+  color: #c0eb25; 
+}
