@@ -115,7 +115,7 @@ const LoginPage = (props) => {
                         onChange={handleChange}
                       />
                       <MdPerson className="input-icon-end" />
-                      {errors.username && touched.username && <div className="text-danger small">{errors.username}</div>}
+                      {errors.username && touched.username && <div className="text-danger small text-start">{errors.username}</div>}
                     </div>
 
                     <div className="mb-3 w-75 position-relative">
@@ -133,7 +133,7 @@ const LoginPage = (props) => {
                       >
                         {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
                       </span>
-                      {errors.password && touched.password && <div className="text-danger small">{errors.password}</div>}
+                      {errors.password && touched.password && <div className="text-danger small text-start">{errors.password}</div>}
                     </div>
 
                     <div className="w-75 py-2">

@@ -17,10 +17,10 @@ const EquipmentLog= () =>{
 
 const columns = [
   { name: "SN", selector: (row) => row.sn, sortable: true, align: 'text-center' },
-  { name: "Calibration Agency", selector: (row) => row.equipment, sortable: true, align: 'text-center' },
+  { name: "Calibration Agency", selector: (row) => row.equipment, sortable: true, align: 'text-start' },
   { name: "Start Time", selector: (row) => row.startTime, sortable: true, align: 'text-center' },
   { name: "End Time", selector: (row) => row.endTime, sortable: true, align: 'text-center' },
-  { name: "Total Hours", selector: (row) => row.totalHours, sortable: true, align: 'text-center' },
+  { name: "Total Hours", selector: (row) => row.totalHours, sortable: true, align: 'text-end' },
   { name: "Usage Date", selector: (row) => row.usageDate, sortable: true, align: 'text-center', },
   { name: "Action", selector: (row) => row.action, sortable: true, align: 'text-center', },
 ];

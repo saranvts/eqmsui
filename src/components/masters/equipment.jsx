@@ -15,9 +15,9 @@ const Equipment = () => {
 
   const columns = [
     { name: "SN", selector: (row) => row.sn, sortable: true, align: 'text-center' },
-    { name: "Calibration Agency", selector: (row) => row.calibrationAgency, sortable: true, align: 'text-center' },
-    { name: "Item Cost", selector: (row) => row.itemCost, sortable: true, align: 'text-center' },
-    { name: "Procured By", selector: (row) => row.procuredBy, sortable: true, align: 'text-center' },
+    { name: "Calibration Agency", selector: (row) => row.calibrationAgency, sortable: true, align: 'text-start' },
+    { name: "Item Cost", selector: (row) => row.itemCost, sortable: true, align: 'text-end' },
+    { name: "Procured By", selector: (row) => row.procuredBy, sortable: true, align: 'text-start' },
     { name: "Location", selector: (row) => row.location, sortable: true, align: 'text-center', },
     { name: "Action", selector: (row) => row.action, sortable: true, align: 'text-center', },
   ];

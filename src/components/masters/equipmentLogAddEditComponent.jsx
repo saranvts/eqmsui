@@ -199,11 +199,11 @@ const EquipmentLogAddEditComponent = ({ mode, equpmentLogId }) => {
                             name="equipment"
                             options={equipmentList}
                             value={values.equipment}
-                            placeholder="Select Equipment Name"
+                            placeholder="Select Calibration Agency"
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                           />
-                          <ErrorMessage name="equipment" component="div" className="text-danger" />
+                          <ErrorMessage name="equipment" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -225,11 +225,7 @@ const EquipmentLogAddEditComponent = ({ mode, equpmentLogId }) => {
                               onKeyDown={(e) => e.preventDefault()}
                             />
 
-                            <ErrorMessage
-                              name="usageDate"
-                              component="div"
-                              className="text-danger"
-                            />
+                            <ErrorMessage name="usageDate" component="div" className="text-danger text-start" />
                           </div>
                         </div>
 
@@ -239,7 +235,13 @@ const EquipmentLogAddEditComponent = ({ mode, equpmentLogId }) => {
 
                             <DatePicker
                               selected={values.startTime}
-                              onChange={(date) => setFieldValue("startTime", date)}
+                              onChange={(date) => {
+                                setFieldValue("startTime", date);
+                                if (values.endTime && date > values.endTime) {
+                                  setFieldValue("endTime", null);
+                                  setFieldValue("totalHours", "");
+                                }
+                              }}
                               className="form-control mb-2"
                               placeholderText="Select Start Time"
                               dateFormat="dd-MM-yyyy h:mm aa"
@@ -256,11 +258,7 @@ const EquipmentLogAddEditComponent = ({ mode, equpmentLogId }) => {
                             />
 
 
-                            <ErrorMessage
-                              name="startTime"
-                              component="div"
-                              className="text-danger"
-                            />
+                            <ErrorMessage name="startTime" component="div" className="text-danger text-start" />
 
                           </div>
                         </div>
@@ -281,17 +279,13 @@ const EquipmentLogAddEditComponent = ({ mode, equpmentLogId }) => {
                               showTimeSelect                             
                               timeIntervals={15}                        
                               timeCaption="Time"
-                              minDate={getMinDate()}
+                              minDate={values.startTime || getMinDate()} 
                               maxDate={getMaxDate()}
                               onKeyDown={(e) => e.preventDefault()}
                               
                             />
 
-                            <ErrorMessage
-                              name="endTime"
-                              component="div"
-                              className="text-danger"
-                            />
+                            <ErrorMessage name="endTime" component="div" className="text-danger text-start" />
                           </div>
                         </div>
 
@@ -306,7 +300,7 @@ const EquipmentLogAddEditComponent = ({ mode, equpmentLogId }) => {
                               readOnly 
 
                             />
-                            <ErrorMessage name="totalHours" component="div" className="text-danger" />
+                            <ErrorMessage name="totalHours" component="div" className="text-danger text-start" />
                           </div>
                         </div>
 
@@ -319,7 +313,7 @@ const EquipmentLogAddEditComponent = ({ mode, equpmentLogId }) => {
                             className="form-control mb-2"
                             placeholder="Enter Description"
                           />
-                          <ErrorMessage name="description" component="div" className="text-danger" />
+                          <ErrorMessage name="description" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 

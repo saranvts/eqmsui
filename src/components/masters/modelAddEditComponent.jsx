@@ -40,7 +40,8 @@ const ModelAddEditComponent = ({ mode, modelId }) => {
   // Form Validation Schema
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .required("This field is required.")
+    .max(250, "Model name must be at most 250 characters")
+    .required("This field is required.")  
 
   });
 
@@ -99,16 +100,17 @@ const ModelAddEditComponent = ({ mode, modelId }) => {
                 {() => (
                   <Form>
                     <div className="row">
-                      <div className="col-md-3">
+                      <div className="col-md-6">
                         <div className="form-group">
                           <label htmlFor="name" className="text-start d-block">Model Name : <span className="text-danger">*</span></label>
                           <Field
-                            type="text"
+                            as="textarea"  
                             name="name"
                             className="form-control mb-2"
                             placeholder="Enter Model Name"
+                            rows={4}    
                           />
-                          <ErrorMessage name="name" component="div" className="text-danger" />
+                          <ErrorMessage name="name" component="div" className="text-danger text-start" />
                         </div>
                       </div>
                     </div>

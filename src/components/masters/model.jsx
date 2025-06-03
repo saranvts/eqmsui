@@ -14,9 +14,9 @@ const Model = () => {
   const [modelId, setModelId] = useState('');
 
   const columns = [
-    { name: "SN", selector: (row) => row.sn, sortable: true, align: 'text-center' },
-    { name: "Model Name", selector: (row) => row.name, sortable: true, align: 'text-center' },
-    { name: "Action", selector: (row) => row.action, sortable: true, align: 'text-center', },
+    { name: "SN", selector: (row) => row.sn, sortable: true, align: 'text-center', width: '50px' },
+    { name: "Model Name", selector: (row) => row.name, sortable: true, align: 'text-start', width: '50px' },
+    { name: "Action", selector: (row) => row.action, sortable: true, align: 'text-center', width: '50px' },
   ];
 
   const editModel = async (id) => {

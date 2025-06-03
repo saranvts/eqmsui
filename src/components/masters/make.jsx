@@ -14,9 +14,9 @@ const Make= () =>{
   const [makeId, setMakeId] = useState('');
 
 const columns = [
-  { name: "SN", selector: (row) => row.sn, sortable: true, align: 'text-center' },
-  { name: "Make Name", selector: (row) => row.name, sortable: true, align: 'text-center' },
-  { name: "Action", selector: (row) => row.action, sortable: true, align: 'text-center', },
+  { name: "SN", selector: (row) => row.sn, sortable: true, align: 'text-center', width: '50px' },
+  { name: "Make Name", selector: (row) => row.name, sortable: true, align: 'text-start', width: '50px' },
+  { name: "Action", selector: (row) => row.action, sortable: true, align: 'text-center', width: '50px' },
 ];
 
     const editMake= async (id) => {

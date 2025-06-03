@@ -148,15 +148,15 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
     model: requiredField,
 
     itemCost: Yup.number()
-      .typeError("Item Cost must be a number")
-      .positive("Item Cost must be greater than zero")
-      .max(9999999999, "Item Cost is too large")
+      .typeError("Item cost must be a number")
+      .positive("Item cost must be greater than zero")
+      .max(9999999999, "Item cost is too large")
       .test(
         "maxDigitsAfterDecimal",
-        "Item Cost must have at most 2 decimal places",
+        "Item cost must have at most 2 decimal places",
         (value) => value === undefined || /^\d+(\.\d{1,2})?$/.test(value.toString())
       )
-      .required("Item Cost is required"),
+      .required("Item cost is required"),
 
   });
 
@@ -252,19 +252,24 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             className="form-control mb-2"
                             placeholder="Enter Calibration Agency"
                           />
-                          <ErrorMessage name="calibrationAgency" component="div" className="text-danger" />
+                          <ErrorMessage name="calibrationAgency" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
                       <div className="col-md-3">
                         <div className="form-group">
-                          <label htmlFor="calibrationDate" className="text-start d-block">Calibraton Date : <span className="text-danger">*</span></label>
+                          <label htmlFor="calibrationDate" className="text-start d-block">Calibration Date : <span className="text-danger">*</span></label>
 
                           <DatePicker
                             selected={values.calibrationDate}
-                            onChange={(date) => setFieldValue("calibrationDate", date)}
+                            onChange={(date) => {
+                              setFieldValue("calibrationDate", date);
+                              if (values.calibrationDueDate && date > values.calibrationDueDate) {
+                                setFieldValue("calibrationDueDate", null);
+                              }
+                            }}
                             className="form-control mb-2"
-                            placeholderText="Select Calibraton Date"
+                            placeholderText="Select Calibration Date"
                             dateFormat="dd-MM-yyyy"
                             showYearDropdown
                             showMonthDropdown
@@ -274,29 +279,37 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             onKeyDown={(e) => e.preventDefault()}
                           />
 
-                          <ErrorMessage name="calibrationDate" component="div" className="text-danger" />
+                          <ErrorMessage name="calibrationDate" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
                       <div className="col-md-3">
                         <div className="form-group">
-                          <label htmlFor="calibrationDueDate" className="text-start d-block">Calibraton Due Date : <span className="text-danger">*</span></label>
+                          <label htmlFor="calibrationDueDate" className="text-start d-block">Calibration Due Date : <span className="text-danger">*</span></label>
 
                           <DatePicker
                             selected={values.calibrationDueDate}
                             onChange={(date) => setFieldValue("calibrationDueDate", date)}
                             className="form-control mb-2"
-                            placeholderText="Select Calibraton Due Date"
+                            placeholderText="Select Calibration Due Date"
                             dateFormat="dd-MM-yyyy"
                             showYearDropdown
                             showMonthDropdown
                             dropdownMode="select"
-                            minDate={getMinDate()}
+                            minDate={
+                              values.calibrationDate
+                                ? new Date(
+                                    new Date(values.calibrationDate).setFullYear(
+                                      new Date(values.calibrationDate).getFullYear() + 1
+                                    )
+                                  )
+                                : getMinDate()
+                            }                            
                             maxDate={getMaxDate()}
                             onKeyDown={(e) => e.preventDefault()}
                           />
 
-                          <ErrorMessage name="calibrationDueDate" component="div" className="text-danger" />
+                          <ErrorMessage name="calibrationDueDate" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -307,10 +320,10 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                           <Field
                             type="text"
                             name="itemCost"
-                            className="form-control mb-2"
+                            className="form-control mb-2 "
                             placeholder="Enter Item Cost"
                           />
-                          <ErrorMessage name="itemCost" component="div" className="text-danger" />
+                          <ErrorMessage name="itemCost" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -323,7 +336,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             className="form-control mb-2"
                             placeholder="Enter Serial Number"
                           />
-                          <ErrorMessage name="itemSerialNumber" component="div" className="text-danger" />
+                          <ErrorMessage name="itemSerialNumber" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -336,7 +349,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             className="form-control mb-2"
                             placeholder="Enter Location"
                           />
-                          <ErrorMessage name="location" component="div" className="text-danger" />
+                          <ErrorMessage name="location" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -345,7 +358,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                           <label htmlFor="procuredBy" className="text-start d-block">Procured By : <span className="text-danger">*</span></label>
                           <Field
                             type="text" name="procuredBy" className="form-control mb-2" placeholder="Enter Procured By" />
-                          <ErrorMessage name="procuredBy" component="div" className="text-danger" />
+                          <ErrorMessage name="procuredBy" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -357,7 +370,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             selected={values.procuredOn}
                             onChange={(date) => setFieldValue("procuredOn", date)}
                             className="form-control mb-2"
-                            placeholderText="Select Calibraton Due Date"
+                            placeholderText="Select Procured On"
                             dateFormat="dd-MM-yyyy"
                             showYearDropdown
                             showMonthDropdown
@@ -367,7 +380,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             onKeyDown={(e) => e.preventDefault()}
                           />
 
-                          <ErrorMessage name="procuredOn" component="div" className="text-danger" />
+                          <ErrorMessage name="procuredOn" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -376,7 +389,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                           <label htmlFor="projectSsrNo" className="text-start d-block">Project SSR Number: <span className="text-danger">*</span></label>
                           <Field type="text" name="projectSsrNo" className="form-control mb-2" placeholder="Enter Project SSR Number" />
 
-                          <ErrorMessage name="projectSsrNo" component="div" className="text-danger" />
+                          <ErrorMessage name="projectSsrNo" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -390,11 +403,11 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             className="form-control mb-2"
                           >
                             <option value="">--Select--</option>
-                            <option value="Y">Y</option>
-                            <option value="N">N</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
                           </Field>
 
-                          <ErrorMessage name="serviceStatus" component="div" className="text-danger" />
+                          <ErrorMessage name="serviceStatus" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -403,7 +416,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                           <label htmlFor="specification" className="text-start d-block">Specification : <span className="text-danger">*</span></label>
                           <Field
                             type="text" name="specification" className="form-control mb-2" placeholder="Enter Specification" />
-                          <ErrorMessage name="specification" component="div" className="text-danger" />
+                          <ErrorMessage name="specification" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -412,7 +425,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                           <label htmlFor="usedBy" className="text-start d-block">Used By : <span className="text-danger">*</span></label>
                           <Field
                             type="text" name="usedBy" className="form-control mb-2" placeholder="Enter Used By" />
-                          <ErrorMessage name="usedBy" component="div" className="text-danger" />
+                          <ErrorMessage name="usedBy" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -430,7 +443,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                           />
-                          <ErrorMessage name="model" component="div" className="text-danger" />
+                          <ErrorMessage name="model" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
@@ -448,7 +461,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             onChange={setFieldValue}
                             onBlur={setFieldTouched}
                           />
-                          <ErrorMessage name="make" component="div" className="text-danger" />
+                          <ErrorMessage name="make" component="div" className="text-danger text-start" />
                         </div>
                       </div>
 
