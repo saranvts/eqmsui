@@ -17,7 +17,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
   const [modelList, setModelList] = useState([]);
   const [makeList, setMakeList] = useState([]);
   const [serialNumberList, setSerialNumberList] = useState([]);
- 
+
 
   const [formData, setFormData] = useState({
 
@@ -134,7 +134,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
     calibrationAgency: stringWithCommonRules("Calibration agency"),
     projectSsrNo: stringWithCommonRules("Project SSR number"),
     itemSerialNumber: stringWithCommonRules("Serial number")
-    .notOneOf(serialNumberList, "Serial number already exists"),
+      .notOneOf(serialNumberList, "Serial number already exists"),
     location: stringWithCommonRules("Location"),
     usedBy: stringWithCommonRules("Used by"),
     specification: stringWithCommonRules("Specification"),
@@ -162,10 +162,10 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
 
 
   const validationSchema = useMemo(() => {
-    const filteredList = serialNumberList.filter( (serial) => serial !== formData.itemSerialNumber );
+    const filteredList = serialNumberList.filter((serial) => serial !== formData.itemSerialNumber);
     return formValidationSchema(filteredList);
   }, [serialNumberList, formData.itemSerialNumber]);
-  
+
 
   const handleSubmit = async (values) => {
     try {
@@ -228,7 +228,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
               <h4 className="form-title">{mode === "add" ? "Add Equipment" : "Edit Equipment"}</h4>
               <Formik
                 initialValues={formData}
-                 validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 onSubmit={(values) => {
                   const payload = {
                     ...values,
@@ -258,14 +258,18 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
 
                       <div className="col-md-3">
                         <div className="form-group">
-                          <label htmlFor="calibrationDate" className="text-start d-block">Calibration Date : <span className="text-danger">*</span></label>
+                          <label htmlFor="calibrationDate" className="text-start d-block">
+                            Calibration Date : <span className="text-danger">*</span>
+                          </label>
 
                           <DatePicker
                             selected={values.calibrationDate}
                             onChange={(date) => {
                               setFieldValue("calibrationDate", date);
-                              if (values.calibrationDueDate && date > values.calibrationDueDate) {
-                                setFieldValue("calibrationDueDate", null);
+                              if (date) {
+                                const dueDate = new Date(date);
+                                dueDate.setFullYear(dueDate.getFullYear() + 1);
+                                setFieldValue("calibrationDueDate", dueDate);
                               }
                             }}
                             className="form-control mb-2"
@@ -285,7 +289,9 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
 
                       <div className="col-md-3">
                         <div className="form-group">
-                          <label htmlFor="calibrationDueDate" className="text-start d-block">Calibration Due Date : <span className="text-danger">*</span></label>
+                          <label htmlFor="calibrationDueDate" className="text-start d-block">
+                            Calibration Due Date : <span className="text-danger">*</span>
+                          </label>
 
                           <DatePicker
                             selected={values.calibrationDueDate}
@@ -296,15 +302,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                             showYearDropdown
                             showMonthDropdown
                             dropdownMode="select"
-                            minDate={
-                              values.calibrationDate
-                                ? new Date(
-                                    new Date(values.calibrationDate).setFullYear(
-                                      new Date(values.calibrationDate).getFullYear() + 1
-                                    )
-                                  )
-                                : getMinDate()
-                            }                            
+                            minDate={values.calibrationDate || getMinDate()}  
                             maxDate={getMaxDate()}
                             onKeyDown={(e) => e.preventDefault()}
                           />
@@ -312,6 +310,7 @@ const EquipmentAddEditComponent = ({ mode, equipmentId }) => {
                           <ErrorMessage name="calibrationDueDate" component="div" className="text-danger text-start" />
                         </div>
                       </div>
+
 
 
                       <div className="col-md-3">
