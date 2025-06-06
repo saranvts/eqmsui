@@ -3,7 +3,7 @@ import './login.css';
 import loginimage from '../../assets/images/eqms-bg1.png';
 import drdologo from '../../assets/images/drdologo.png';
 import { MdPerson, MdVisibility, MdVisibilityOff } from "react-icons/md";
-import bgImage from '../../assets/images/gradient-blue.jpg';
+//import bgImage from '../../assets/images/gradient-blue.jpg';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import withRouter from "../../common/with-router";
@@ -35,6 +35,7 @@ const LoginPage = (props) => {
           setLoading(false);
           showError("Login failed. Please try again.");
         } else {
+          localStorage.setItem("usertoken", JSON.stringify(response.data.token));
           props.router.navigate("/dashboard");
         }
       },
@@ -65,7 +66,6 @@ const LoginPage = (props) => {
 
   return (
     <div className="login-wrapper d-flex flex-column">
-      {/* Header */}
       <header className="navbar navbar-expand-lg navbar-dark custom-header-bg px-2 py-2">
         <div className="d-flex align-items-center mx-auto">
           <img src={drdologo} alt="Logo" height="70" width="70" className="me-4" />
@@ -73,18 +73,16 @@ const LoginPage = (props) => {
         </div>
       </header>
 
-      {/* Main Content with equal padding */}
       <main className="flex-grow-1 d-flex justify-content-center align-items-center p-4"
-          style={{
-            backgroundImage: `url(${bgImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
+      // style={{
+      //   backgroundImage: `url(${bgImage})`,
+      //   backgroundSize: 'cover',
+      //   backgroundPosition: 'center',
+      //   backgroundRepeat: 'no-repeat',
+      // }}
       >
         <div className="card card-custom overflow-hidden w-100">
-          <div className="row g-0" style={{height:'500px'}}>
-            {/* Left Side: Image */}
+          <div className="row g-0" style={{ height: '500px' }}>
             <div className="col-md-6 d-flex align-items-center justify-content-center  p-4">
               <img
                 src={loginimage}
@@ -93,18 +91,18 @@ const LoginPage = (props) => {
                 style={{ maxWidth: '530px', maxHeight: '100%' }}
               />
             </div>
-            {/* Right Side: Login Form */}
+
             <div className="col-md-6 p-5 d-flex flex-column justify-content-center">
               <h5 className="text-center text-brand mb-2">Welcome To EQMS</h5>
               <h4 className="text-center mb-4">Login</h4>
-               {message && (
-                  <div className="form-group">
-                      <div className="alert alert-danger" role="alert">
-                          {message}
-                      </div>
+              {message && (
+                <div className="form-group">
+                  <div className="alert alert-danger" role="alert">
+                    {message}
                   </div>
-                  )}
-               <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLoginSubmit}>
+                </div>
+              )}
+              <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLoginSubmit}>
                 {({ errors, touched, handleChange, values }) => (
                   <Form className="d-flex flex-column align-items-center">
                     <div className="mb-3 w-75 position-relative">
@@ -117,7 +115,7 @@ const LoginPage = (props) => {
                         onChange={handleChange}
                       />
                       <MdPerson className="input-icon-end" />
-                      {errors.username && touched.username && <div className="text-danger small">{errors.username}</div>}
+                      {errors.username && touched.username && <div className="text-danger small text-start">{errors.username}</div>}
                     </div>
 
                     <div className="mb-3 w-75 position-relative">
@@ -135,7 +133,7 @@ const LoginPage = (props) => {
                       >
                         {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
                       </span>
-                      {errors.password && touched.password && <div className="text-danger small">{errors.password}</div>}
+                      {errors.password && touched.password && <div className="text-danger small text-start">{errors.password}</div>}
                     </div>
 
                     <div className="w-75 py-2">
@@ -151,7 +149,6 @@ const LoginPage = (props) => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="py-2 text-center text-white custom-header-bg">
         <small>Website maintained by Vedant Tech Solutions</small>
       </footer>

@@ -1,0 +1,140 @@
+.datatable-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  line-height: 1.8;
+
+}
+
+.table th {
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 2px solid #3980c7;
+  background-color: #1b7dee;
+  color: #ffffff;
+  cursor: pointer;
+  padding: .2rem .2rem !important;
+}
+
+.table td {
+  vertical-align: middle;
+  line-height: 1.5;
+}
+
+.table td.access-cell {
+  padding: 0 !important;
+}
+
+.sortable-column {
+  position: relative;
+  padding-right: 20px;
+}
+
+.sort-icon {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #ffffff;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.sort-icon.asc {
+  border-top: none;
+  border-bottom: 5px solid #ffffff;
+}
+
+.search-bar {
+  width: 200px;
+}
+
+.btn {
+  min-width: 40px;
+  text-align: center;
+}
+
+.justify-content-end {
+  margin-right: 0%;
+}
+
+.btn-active-page-no {
+  background-color: #1b7dee;
+  color: #ffffff;
+}
+
+.btn-active-page-no:hover {
+  background-color: #1b7dee;
+  color: #ffffff;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.modern-table thead {
+  background-color: #1661ad;
+  color: #ECF0F1;
+}
+
+.modern-table th {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modern-table th:hover {
+  background-color: #2C3E50;
+}
+
+.modern-table tbody tr:nth-child(even) {
+  background-color: #F8F8F8;
+}
+
+.modern-table td {
+  padding: 12px 18px;
+  border-bottom: 1px solid #EEE;
+}
+
+.modern-table .sortable-column {
+  position: relative;
+}
+
+.modern-table .sort-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+.modern-table .sort-icon.asc {
+  border-bottom: 8px solid #ECF0F1;
+}
+
+.modern-table .sort-icon.desc {
+  border-top: 8px solid #ECF0F1;
+}
+
+.modern-table .text-center {
+  text-align: center;
+}

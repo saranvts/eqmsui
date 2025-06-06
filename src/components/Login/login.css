@@ -30,7 +30,7 @@ footer {
   background-color: #f8f9fa !important;
 }
 
-@keyframes pulseGlow {
+/* @keyframes pulseGlow {
   0% {
     box-shadow: 0 0 0px rgba(9, 145, 236, 0.4);
   }
@@ -40,12 +40,13 @@ footer {
   100% {
     box-shadow: 0 0 0px rgba(9, 145, 236, 0.4);
   }
-} 
+}  */
 
 .card-custom {
   max-width: 1000px;
   border: none !important;
-  box-shadow: rgb(0 66 135 / 56%) 0px 22px 70px 4px;
+  box-shadow: rgb(4 95 191 / 56%) 0px -1px 6px 14px;
+  /* box-shadow: rgb(0 66 135 / 56%) 0px 22px 70px 4px; */
   border-radius: 40px !important;
   animation: pulseGlow 3s infinite ease-in-out;
 }

@@ -3,24 +3,22 @@ import { logout } from "../../services/auth.service";
 import './navbar.css';
 import { FaHome } from "react-icons/fa";
 
-
-
 const Navbar = () => {
   const navigate = useNavigate();
 
-const handleLogout = (e) => {
-     e.preventDefault();
-     logout();
-     navigate("/");
-   };
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+    navigate("/");
+  };
 
- return (
+  return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark navbar-first px-3">
-       
-        <Link className="navbar-brand flex items-center gap-2 text-white" to="/dashboard">
-          <FaHome className='me-1' size={32} />
-          <span className="text-lg font-semibold">EQMS</span>
+
+        <Link className="navbar-brand flex items-center gap-2 group" to="/dashboard">
+          <FaHome className="me-1 icon" size={32} />
+          <span className="text-lg font-semibold label">EQMS</span>
         </Link>
 
         <button
@@ -37,32 +35,27 @@ const handleLogout = (e) => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto align-items-center">
-            
-            {/* First Dropdown */}
+
             <li className="nav-item dropdown hover-dropdown position-relative">
               <div className="nav-link dropdown-toggle" role="button">
-                Module One
+                Master
               </div>
               <ul className="dropdown-menu">
-                <li><Link className="dropdown-item" to="#">Option 1</Link></li>
-                <li><Link className="dropdown-item" to="#">Option 2</Link></li>
+                <li><Link className="dropdown-item" to="/make">Make</Link></li>
+                <li><Link className="dropdown-item" to="/model">Model</Link></li>
               </ul>
             </li>
 
-            {/* Second Dropdown */}
             <li className="nav-item dropdown hover-dropdown position-relative ms-3 me-3">
               <div className="nav-link dropdown-toggle" role="button">
-                Module Two
+                Equipment
               </div>
               <ul className="dropdown-menu">
-                <li><Link className="dropdown-item" to="#">Today</Link></li>
-                <li><Link className="dropdown-item" to="#">This Week</Link></li>
-                <li><Link className="dropdown-item" to="#">This Month</Link></li>
+                <li><Link className="dropdown-item" to="/equipment">Equipment </Link></li>
+                <li><Link className="dropdown-item" to="/equipmentlog">Equipment Log </Link></li>
               </ul>
             </li>
 
-
-            {/* Logout button */}
             <li className="nav-item">
               <button className="btn btn-outline-light btn-sm" onClick={handleLogout}>
                 Logout
@@ -72,7 +65,7 @@ const handleLogout = (e) => {
         </div>
       </nav>
 
-      
+
     </>
   );
 };
